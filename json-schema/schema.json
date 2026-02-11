@@ -1,22 +1,18 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/template/v1.0.0/schema.json#",
-  "title": "Template Extension",
-  "description": "STAC Template Extension for STAC Items and STAC Collections.",
+  "$id": "https://stac-extensions.github.io/3d-city-models/v0.1.0/schema.json",
+  "title": "3D City Models Extension",
+  "description": "STAC 3D City Models Extension for 3D city model datasets. This extension provides fields for 3D city model metadata including encoding format, city objects, levels of detail (LoD), and appearance information.",
   "oneOf": [
     {
-      "$comment": "This is the schema for STAC Items. Remove this object if this extension only applies to Collections.",
+      "$comment": "This is the schema for STAC Items.",
       "allOf": [
         {
           "$ref": "#/definitions/stac_extensions"
         },
         {
           "type": "object",
-          "required": [
-            "type",
-            "properties",
-            "assets"
-          ],
+          "required": ["type", "properties", "assets"],
           "properties": {
             "type": {
               "const": "Feature"
@@ -24,10 +20,7 @@
             "properties": {
               "allOf": [
                 {
-                  "$comment": "Require fields here for Item Properties.",
-                  "required": [
-                    "template:new_field"
-                  ]
+                  "$ref": "#/definitions/require_any_field"
                 },
                 {
                   "$ref": "#/definitions/fields"
@@ -50,9 +43,7 @@
       "type": "object",
       "allOf": [
         {
-          "required": [
-            "type"
-          ],
+          "required": ["type"],
           "properties": {
             "type": {
               "const": "Collection"
@@ -65,13 +56,10 @@
       ],
       "anyOf": [
         {
-          "$comment": "This is the schema for the top-level fields in a Collection. Remove this if this extension does not define top-level fields for Collections.",
+          "$comment": "This is the schema for the top-level fields in a Collection.",
           "allOf": [
             {
-              "$comment": "Require fields here for Collections (top-level).",
-              "required": [
-                "template:new_field"
-              ]
+              "$ref": "#/definitions/require_any_field"
             },
             {
               "$ref": "#/definitions/fields"
@@ -80,9 +68,7 @@
         },
         {
           "$comment": "This validates the fields in Collection Assets, but does not require them.",
-          "required": [
-            "assets"
-          ],
+          "required": ["assets"],
           "properties": {
             "assets": {
               "type": "object",
@@ -105,9 +91,7 @@
         },
         {
           "$comment": "This is the schema for the fields in Item Asset Definitions. It doesn't require any fields.",
-          "required": [
-            "item_assets"
-          ],
+          "required": ["item_assets"],
           "properties": {
             "item_assets": {
               "type": "object",
@@ -130,9 +114,7 @@
         },
         {
           "$comment": "This is the schema for the fields in Summaries. By default, only checks the existence of the properties, but not the schema of the summaries.",
-          "required": [
-            "summaries"
-          ],
+          "required": ["summaries"],
           "properties": {
             "summaries": {
               "$ref": "#/definitions/require_any_field"
@@ -145,14 +127,12 @@
   "definitions": {
     "stac_extensions": {
       "type": "object",
-      "required": [
-        "stac_extensions"
-      ],
+      "required": ["stac_extensions"],
       "properties": {
         "stac_extensions": {
           "type": "array",
           "contains": {
-            "const": "https://stac-extensions.github.io/template/v1.0.0/schema.json"
+            "const": "https://stac-extensions.github.io/3d-city-models/v0.1.0/schema.json"
           }
         }
       }
@@ -160,50 +140,232 @@
     "require_any_field": {
       "$comment": "Please list all fields here so that we can force the existence of one of them in other parts of the schemas.",
       "anyOf": [
-        {"required": ["template:new_field"]},
-        {"required": ["template:xyz"]},
-        {"required": ["template:another_one"]}
+        {"required": ["city3d:encoding"]},
+        {"required": ["city3d:version"]},
+        {"required": ["city3d:city_objects"]},
+        {"required": ["city3d:lods"]},
+        {"required": ["city3d:co_types"]},
+        {"required": ["city3d:attributes"]},
+        {"required": ["city3d:semantic_surfaces"]},
+        {"required": ["city3d:textures"]},
+        {"required": ["city3d:materials"]},
+        {"required": ["city3d:encoding_version"]}
       ]
     },
     "fields": {
       "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
       "type": "object",
       "properties": {
-        "template:new_field": {
-          "type": "string"
+        "city3d:encoding": {
+          "$ref": "#/definitions/city3d:encoding"
         },
-        "template:xyz": {
-          "type": "object",
-          "required": [
-            "x",
-            "y",
-            "z"
-          ],
-          "properties": {
-            "x": {
-              "type": "number"
-            },
-            "y": {
-              "type": "number"
-            },
-            "z": {
-              "type": "number"
-            }
-          }
+        "city3d:version": {
+          "$ref": "#/definitions/city3d:version"
         },
-        "template:another_one": {
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
+        "city3d:encoding_version": {
+          "$ref": "#/definitions/city3d:encoding_version"
+        },
+        "city3d:city_objects": {
+          "$ref": "#/definitions/city3d:city_objects"
+        },
+        "city3d:lods": {
+          "$ref": "#/definitions/city3d:lods"
+        },
+        "city3d:co_types": {
+          "$ref": "#/definitions/city3d:co_types"
+        },
+        "city3d:attributes": {
+          "$ref": "#/definitions/city3d:attributes"
+        },
+        "city3d:semantic_surfaces": {
+          "$ref": "#/definitions/city3d:semantic_surfaces"
+        },
+        "city3d:textures": {
+          "$ref": "#/definitions/city3d:textures"
+        },
+        "city3d:materials": {
+          "$ref": "#/definitions/city3d:materials"
         }
       },
       "patternProperties": {
-        "^(?!template:)": {
-          "$comment": "Above, change `template` to the prefix of this extension"
+        "^(?!city3d:)": {
+          "$comment": "Allow non-city3d fields. Change city3d to the prefix of this extension if needed."
         }
       },
       "additionalProperties": false
+    },
+    "city3d:encoding": {
+      "title": "Encoding Format",
+      "description": "The 3D city model encoding format. Can be a single format or an array of formats for multi-format datasets.",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": ["CityJSON", "CityJSONSeq", "FlatCityBuf", "CityParquet", "CityGML", "KML/COLLADA", "3Tiles", "I3S", "OBJ", "GLTF", "GLB"]
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["CityJSON", "CityJSONSeq", "FlatCityBuf", "CityParquet", "CityGML", "KML/COLLADA", "3Tiles", "I3S", "OBJ", "GLTF", "GLB"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      ]
+    },
+    "city3d:version": {
+      "title": "Specification Version",
+      "description": "The specification version of the 3D city model format (e.g., '1.1', '2.0' for CityJSON; '2.0', '3.0' for CityGML).",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+(?:\\.\\d+)?$"
+    },
+    "city3d:encoding_version": {
+      "title": "Encoding Version",
+      "description": "Version of the specific encoding format, when the encoding has its own versioning independent of the base specification. For example, FlatCityBuf may have version '0.2.0' regardless of CityJSON version.",
+      "type": "string"
+    },
+    "city3d:city_objects": {
+      "title": "City Objects Count",
+      "description": "Number of city objects in the dataset. Can be a single integer (for Items) or an object with min/max/total statistics (for Collections). City objects include entities like buildings, bridges, roads, tunnels, vegetation, etc.",
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "title": "City Objects Statistics",
+          "type": "object",
+          "required": ["min", "max", "total"],
+          "properties": {
+            "min": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Minimum number of city objects across all items."
+            },
+            "max": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Maximum number of city objects across all items."
+            },
+            "total": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Total number of city objects across all items."
+            }
+          }
+        }
+      ]
+    },
+    "city3d:lods": {
+      "title": "Levels of Detail",
+      "description": "Available Levels of Detail (LoD) in the dataset. LoD values follow the improved specification by Biljecki et al., supporting decimal values (e.g., '1.5', '2.3'). LoD represents the geometric complexity and detail of 3D city objects.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^\\d+(?:\\.\\d+)?$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "city3d:co_types": {
+      "title": "City Object Types",
+      "description": "City object types present in the dataset. Includes standard types from various 3D city model specifications and extension types prefixed with '+'. Common types include Building, Bridge, Road, Tunnel, WaterBody, Vegetation, etc.",
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "Building",
+              "BuildingPart",
+              "BuildingInstallation",
+              "BuildingConstructionElement",
+              "BuildingFurniture",
+              "BuildingStorey",
+              "BuildingRoom",
+              "BuildingUnit",
+              "Bridge",
+              "BridgePart",
+              "BridgeInstallation",
+              "BridgeConstructionElement",
+              "BridgeRoom",
+              "BridgeFurniture",
+              "CityFurniture",
+              "CityObjectGroup",
+              "GenericCityObject",
+              "LandUse",
+              "OtherConstruction",
+              "PlantCover",
+              "SolitaryVegetationObject",
+              "Railway",
+              "Road",
+              "TINRelief",
+              "TransportSquare",
+              "Tunnel",
+              "TunnelPart",
+              "TunnelInstallation",
+              "TunnelConstructionElement",
+              "TunnelHollowSpace",
+              "TunnelFurniture",
+              "WaterBody",
+              "WaterSurface",
+              "WaterGround"
+            ]
+          },
+          {
+            "$comment": "Extension City Object types start with +",
+            "type": "string",
+            "pattern": "^\\+.+$"
+          }
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "city3d:attributes": {
+      "title": "Attribute Schema",
+      "description": "Schema definitions for semantic attributes on city objects. This describes the structure of custom attributes that may be present on city objects beyond the standard properties of the 3D city model format.",
+      "type": "array",
+      "items": {
+        "title": "Attribute Definition",
+        "type": "object",
+        "required": ["name", "type"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The name of the attribute."
+          },
+          "type": {
+            "type": "string",
+            "enum": ["String", "Number", "Boolean", "Date", "Array", "Object"],
+            "description": "The data type of the attribute."
+          },
+          "description": {
+            "type": "string",
+            "description": "A description of what the attribute represents."
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Whether this attribute is required for the city object."
+          }
+        }
+      }
+    },
+    "city3d:semantic_surfaces": {
+      "title": "Semantic Surfaces",
+      "description": "Indicates whether the dataset contains semantic surfaces (e.g., roofs, walls, ground surfaces). Semantic surfaces provide detailed geometry breakdown with specific semantic meaning, enabling precise queries and analysis.",
+      "type": "boolean"
+    },
+    "city3d:textures": {
+      "title": "Textures",
+      "description": "Indicates whether the dataset includes texture information for visual appearance of surfaces.",
+      "type": "boolean"
+    },
+    "city3d:materials": {
+      "title": "Materials",
+      "description": "Indicates whether the dataset includes material information (e.g., color, shininess, transparency) for surface appearance.",
+      "type": "boolean"
     }
   }
 }
