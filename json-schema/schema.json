@@ -12,7 +12,11 @@
         },
         {
           "type": "object",
-          "required": ["type", "properties", "assets"],
+          "required": [
+            "type",
+            "properties",
+            "assets"
+          ],
           "properties": {
             "type": {
               "const": "Feature"
@@ -43,7 +47,9 @@
       "type": "object",
       "allOf": [
         {
-          "required": ["type"],
+          "required": [
+            "type"
+          ],
           "properties": {
             "type": {
               "const": "Collection"
@@ -68,7 +74,9 @@
         },
         {
           "$comment": "This validates the fields in Collection Assets, but does not require them.",
-          "required": ["assets"],
+          "required": [
+            "assets"
+          ],
           "properties": {
             "assets": {
               "type": "object",
@@ -91,7 +99,9 @@
         },
         {
           "$comment": "This is the schema for the fields in Item Asset Definitions. It doesn't require any fields.",
-          "required": ["item_assets"],
+          "required": [
+            "item_assets"
+          ],
           "properties": {
             "item_assets": {
               "type": "object",
@@ -114,7 +124,9 @@
         },
         {
           "$comment": "This is the schema for the fields in Summaries. By default, only checks the existence of the properties, but not the schema of the summaries.",
-          "required": ["summaries"],
+          "required": [
+            "summaries"
+          ],
           "properties": {
             "summaries": {
               "$ref": "#/definitions/require_any_field"
@@ -125,9 +137,41 @@
     }
   ],
   "definitions": {
+    "proj:fields": {
+      "$comment": "Projection Extension - https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+      "allOf": [
+        {
+          "$ref": "https://stac-extensions.github.io/projection/v2.0.0/schema.json#/definitions/fields"
+        }
+      ]
+    },
+    "file:fields": {
+      "$comment": "File Extension - https://stac-extensions.github.io/file/v2.1.0/schema.json",
+      "allOf": [
+        {
+          "$ref": "https://stac-extensions.github.io/file/v2.1.0/schema.json#/definitions/fields"
+        }
+      ]
+    },
+    "stats:fields": {
+      "$comment": "Statistics Extension - https://stac-extensions.github.io/stats/v0.2.0/schema.json",
+      "oneOf": [
+        {
+          "$ref": "https://stac-extensions.github.io/stats/v0.2.0/schema.json#/definitions/stats_for_catalogs"
+        },
+        {
+          "$ref": "https://stac-extensions.github.io/stats/v0.2.0/schema.json#/definitions/stats_for_collections"
+        },
+        {
+          "$ref": "https://stac-extensions.github.io/stats/v0.2.0/schema.json#/definitions/stats_for_items"
+        }
+      ]
+    },
     "stac_extensions": {
       "type": "object",
-      "required": ["stac_extensions"],
+      "required": [
+        "stac_extensions"
+      ],
       "properties": {
         "stac_extensions": {
           "type": "array",
@@ -140,59 +184,106 @@
     "require_any_field": {
       "$comment": "Please list all fields here so that we can force the existence of one of them in other parts of the schemas.",
       "anyOf": [
-        {"required": ["city3d:encoding"]},
-        {"required": ["city3d:version"]},
-        {"required": ["city3d:city_objects"]},
-        {"required": ["city3d:lods"]},
-        {"required": ["city3d:co_types"]},
-        {"required": ["city3d:attributes"]},
-        {"required": ["city3d:semantic_surfaces"]},
-        {"required": ["city3d:textures"]},
-        {"required": ["city3d:materials"]},
-        {"required": ["city3d:encoding_version"]}
+        {
+          "required": [
+            "city3d:encoding"
+          ]
+        },
+        {
+          "required": [
+            "city3d:version"
+          ]
+        },
+        {
+          "required": [
+            "city3d:city_objects"
+          ]
+        },
+        {
+          "required": [
+            "city3d:lods"
+          ]
+        },
+        {
+          "required": [
+            "city3d:co_types"
+          ]
+        },
+        {
+          "required": [
+            "city3d:attributes"
+          ]
+        },
+        {
+          "required": [
+            "city3d:semantic_surfaces"
+          ]
+        },
+        {
+          "required": [
+            "city3d:textures"
+          ]
+        },
+        {
+          "required": [
+            "city3d:materials"
+          ]
+        },
+        {
+          "required": [
+            "city3d:encoding_version"
+          ]
+        }
       ]
     },
     "fields": {
       "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
-      "type": "object",
-      "properties": {
-        "city3d:encoding": {
-          "$ref": "#/definitions/city3d:encoding"
+      "allOf": [
+        {
+          "$ref": "#/definitions/proj:fields"
         },
-        "city3d:version": {
-          "$ref": "#/definitions/city3d:version"
+        {
+          "$ref": "#/definitions/file:fields"
         },
-        "city3d:encoding_version": {
-          "$ref": "#/definitions/city3d:encoding_version"
+        {
+          "$ref": "#/definitions/stats:fields"
         },
-        "city3d:city_objects": {
-          "$ref": "#/definitions/city3d:city_objects"
-        },
-        "city3d:lods": {
-          "$ref": "#/definitions/city3d:lods"
-        },
-        "city3d:co_types": {
-          "$ref": "#/definitions/city3d:co_types"
-        },
-        "city3d:attributes": {
-          "$ref": "#/definitions/city3d:attributes"
-        },
-        "city3d:semantic_surfaces": {
-          "$ref": "#/definitions/city3d:semantic_surfaces"
-        },
-        "city3d:textures": {
-          "$ref": "#/definitions/city3d:textures"
-        },
-        "city3d:materials": {
-          "$ref": "#/definitions/city3d:materials"
+        {
+          "type": "object",
+          "properties": {
+            "city3d:encoding": {
+              "$ref": "#/definitions/city3d:encoding"
+            },
+            "city3d:version": {
+              "$ref": "#/definitions/city3d:version"
+            },
+            "city3d:encoding_version": {
+              "$ref": "#/definitions/city3d:encoding_version"
+            },
+            "city3d:city_objects": {
+              "$ref": "#/definitions/city3d:city_objects"
+            },
+            "city3d:lods": {
+              "$ref": "#/definitions/city3d:lods"
+            },
+            "city3d:co_types": {
+              "$ref": "#/definitions/city3d:co_types"
+            },
+            "city3d:attributes": {
+              "$ref": "#/definitions/city3d:attributes"
+            },
+            "city3d:semantic_surfaces": {
+              "$ref": "#/definitions/city3d:semantic_surfaces"
+            },
+            "city3d:textures": {
+              "$ref": "#/definitions/city3d:textures"
+            },
+            "city3d:materials": {
+              "$ref": "#/definitions/city3d:materials"
+            }
+          }
         }
-      },
-      "patternProperties": {
-        "^(?!city3d:)": {
-          "$comment": "Allow non-city3d fields. Change city3d to the prefix of this extension if needed."
-        }
-      },
-      "additionalProperties": false
+      ]
     },
     "city3d:encoding": {
       "title": "Encoding Format",
@@ -200,13 +291,37 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": ["CityJSON", "CityJSONSeq", "FlatCityBuf", "CityParquet", "CityGML", "KML/COLLADA", "3Tiles", "I3S", "OBJ", "GLTF", "GLB"]
+          "enum": [
+            "CityJSON",
+            "CityJSONSeq",
+            "FlatCityBuf",
+            "CityParquet",
+            "CityGML",
+            "KML/COLLADA",
+            "3Tiles",
+            "I3S",
+            "OBJ",
+            "GLTF",
+            "GLB"
+          ]
         },
         {
           "type": "array",
           "items": {
             "type": "string",
-            "enum": ["CityJSON", "CityJSONSeq", "FlatCityBuf", "CityParquet", "CityGML", "KML/COLLADA", "3Tiles", "I3S", "OBJ", "GLTF", "GLB"]
+            "enum": [
+              "CityJSON",
+              "CityJSONSeq",
+              "FlatCityBuf",
+              "CityParquet",
+              "CityGML",
+              "KML/COLLADA",
+              "3Tiles",
+              "I3S",
+              "OBJ",
+              "GLTF",
+              "GLB"
+            ]
           },
           "minItems": 1,
           "uniqueItems": true
@@ -235,7 +350,11 @@
         {
           "title": "City Objects Statistics",
           "type": "object",
-          "required": ["min", "max", "total"],
+          "required": [
+            "min",
+            "max",
+            "total"
+          ],
           "properties": {
             "min": {
               "type": "integer",
@@ -329,7 +448,10 @@
       "items": {
         "title": "Attribute Definition",
         "type": "object",
-        "required": ["name", "type"],
+        "required": [
+          "name",
+          "type"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -338,7 +460,14 @@
           },
           "type": {
             "type": "string",
-            "enum": ["String", "Number", "Boolean", "Date", "Array", "Object"],
+            "enum": [
+              "String",
+              "Number",
+              "Boolean",
+              "Date",
+              "Array",
+              "Object"
+            ],
             "description": "The data type of the attribute."
           },
           "description": {

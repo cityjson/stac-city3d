@@ -19,7 +19,7 @@ This extension provides STAC metadata fields specific to 3D city model datasets,
 
 ## Required Extensions
 
-The 3D City Models Extension is designed to work alongside the following STAC extensions:
+The 3D City Models Extension is designed to work alongside the following STAC extensions. These extensions are referenced in the JSON schema using `$ref` to allow their fields to be used alongside `city3d:` fields:
 
 ### Projection Extension
 
