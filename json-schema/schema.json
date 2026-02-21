@@ -137,36 +137,6 @@
     }
   ],
   "definitions": {
-    "proj:fields": {
-      "$comment": "Projection Extension - https://stac-extensions.github.io/projection/v2.0.0/schema.json",
-      "allOf": [
-        {
-          "$ref": "https://stac-extensions.github.io/projection/v2.0.0/schema.json#/definitions/fields"
-        }
-      ]
-    },
-    "file:fields": {
-      "$comment": "File Extension - https://stac-extensions.github.io/file/v2.1.0/schema.json",
-      "allOf": [
-        {
-          "$ref": "https://stac-extensions.github.io/file/v2.1.0/schema.json#/definitions/fields"
-        }
-      ]
-    },
-    "stats:fields": {
-      "$comment": "Statistics Extension - https://stac-extensions.github.io/stats/v0.2.0/schema.json",
-      "oneOf": [
-        {
-          "$ref": "https://stac-extensions.github.io/stats/v0.2.0/schema.json#/definitions/stats_for_catalogs"
-        },
-        {
-          "$ref": "https://stac-extensions.github.io/stats/v0.2.0/schema.json#/definitions/stats_for_collections"
-        },
-        {
-          "$ref": "https://stac-extensions.github.io/stats/v0.2.0/schema.json#/definitions/stats_for_items"
-        }
-      ]
-    },
     "stac_extensions": {
       "type": "object",
       "required": [
@@ -239,15 +209,6 @@
     "fields": {
       "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
       "allOf": [
-        {
-          "$ref": "#/definitions/proj:fields"
-        },
-        {
-          "$ref": "#/definitions/file:fields"
-        },
-        {
-          "$ref": "#/definitions/stats:fields"
-        },
         {
           "type": "object",
           "properties": {
@@ -377,11 +338,11 @@
     },
     "city3d:lods": {
       "title": "Levels of Detail",
-      "description": "Available Levels of Detail (LoD) in the dataset. LoD values follow the improved specification by Biljecki et al., supporting decimal values (e.g., '1.5', '2.3'). LoD represents the geometric complexity and detail of 3D city objects.",
+      "description": "Available Levels of Detail (LoD) in the dataset. LoD values follow the improved specification by Biljecki et al., supporting decimal values (e.g., 1.5, 2.3). LoD represents the geometric complexity and detail of 3D city objects.",
       "type": "array",
       "items": {
-        "type": "string",
-        "pattern": "^\\d+(?:\\.\\d+)?$"
+        "type": "number",
+        "minimum": 0
       },
       "minItems": 1,
       "uniqueItems": true

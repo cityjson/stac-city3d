@@ -79,8 +79,8 @@ The fields in the table below can be used in these parts of STAC documents:
 | city3d:version | string | Specification version (e.g., "2.1" for CityJSON, "3.0" for CityGML). |
 | city3d:encoding_version | string | Version of the specific encoding format. |
 | city3d:city_objects | integer or [City Objects Statistics](#city-objects-statistics) | Number of city objects in the dataset. |
-| city3d:lods | [number] | Available Levels of Detail (LoD) in the dataset. |
-| city3d:co_types | [string] | City object types present in the dataset. |
+| city3d:lods | \[number\] | Available Levels of Detail (LoD) in the dataset. |
+| city3d:co_types | \[string\] | City object types present in the dataset. |
 | city3d:attributes | [[Attribute Definition](#attribute-definition)] | Schema definitions for semantic attributes on city objects. |
 | city3d:semantic_surfaces | boolean | Indicates whether the dataset contains semantic surfaces. |
 | city3d:textures | boolean | Indicates whether the dataset includes texture information. |
