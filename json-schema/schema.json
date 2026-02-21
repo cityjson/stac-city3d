@@ -359,7 +359,7 @@
               "Building",
               "BuildingPart",
               "BuildingInstallation",
-              "BuildingConstructionElement",
+              "BuildingConstructiveElement",
               "BuildingFurniture",
               "BuildingStorey",
               "BuildingRoom",
@@ -367,7 +367,7 @@
               "Bridge",
               "BridgePart",
               "BridgeInstallation",
-              "BridgeConstructionElement",
+              "BridgeConstructiveElement",
               "BridgeRoom",
               "BridgeFurniture",
               "CityFurniture",
@@ -384,12 +384,13 @@
               "Tunnel",
               "TunnelPart",
               "TunnelInstallation",
-              "TunnelConstructionElement",
+              "TunnelConstructiveElement",
               "TunnelHollowSpace",
               "TunnelFurniture",
               "WaterBody",
               "WaterSurface",
-              "WaterGround"
+              "WaterGroundSurface",
+              "Waterway"
             ]
           },
           {
