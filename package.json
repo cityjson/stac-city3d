@@ -1,6 +1,6 @@
 {
   "name": "stac-3d-city-models-extension",
-  "version": "0.1.0",
+  "version": "0.0.2",
   "description": "STAC Extension for 3D city model datasets (CityJSON, CityGML, and more)",
   "scripts": {
     "test": "npm run check-markdown && npm run check-examples",
