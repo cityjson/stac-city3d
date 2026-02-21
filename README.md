@@ -1,7 +1,7 @@
 # 3D City Models Extension Specification
 
 - **Title:** 3D City Models
-- **Identifier:** <https://cityjson.github.io/stac-city3d/v0.0.2/schema.json>
+- **Identifier:** <https://cityjson.github.io/stac-city3d/v0.1.0/schema.json>
 - **Field Name Prefix:** city3d
 - **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
@@ -179,7 +179,7 @@ The following types should be used as applicable `rel` types in the [Link Object
   "stac_version": "1.1.0",
   "stac_extensions": [
     "https://stac-extensions.github.io/projection/v2.1.0/schema.json",
-    "https://cityjson.github.io/stac-city3d/v0.0.2/schema.json"
+    "https://cityjson.github.io/stac-city3d/v0.1.0/schema.json"
   ],
   "id": "delft-3d-city-model",
   "geometry": {
@@ -234,7 +234,7 @@ The following types should be used as applicable `rel` types in the [Link Object
   "stac_version": "1.1.0",
   "stac_extensions": [
     "https://stac-extensions.github.io/projection/v2.1.0/schema.json",
-    "https://cityjson.github.io/stac-city3d/v0.0.2/schema.json"
+    "https://cityjson.github.io/stac-city3d/v0.1.0/schema.json"
   ],
   "id": "hamburg-citygml-lod2",
   "geometry": {
@@ -279,7 +279,7 @@ The following types should be used as applicable `rel` types in the [Link Object
   "stac_version": "1.1.0",
   "stac_extensions": [
     "https://stac-extensions.github.io/projection/v2.1.0/schema.json",
-    "https://cityjson.github.io/stac-city3d/v0.0.2/schema.json"
+    "https://cityjson.github.io/stac-city3d/v0.1.0/schema.json"
   ],
   "id": "netherlands-3d-cities",
   "title": "Netherlands 3D City Models",
