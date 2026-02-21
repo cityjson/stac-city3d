@@ -2,72 +2,88 @@
   "stac_version": "1.0.0",
   "stac_extensions": [
     "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/template/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/projection/v2.1.0/schema.json",
+    "https://stac-extensions.github.io/3d-city-models/v0.1.0/schema.json"
   ],
   "type": "Collection",
-  "id": "collection",
-  "title": "A title",
-  "description": "A description",
-  "license": "Apache-2.0",
+  "id": "netherlands-3d-cities",
+  "title": "Netherlands 3D City Models",
+  "description": "Collection of 3D city models for major Dutch cities.",
+  "license": "CC-BY-4.0",
   "extent": {
     "spatial": {
       "bbox": [
         [
-          172.9,
-          1.3,
-          173,
-          1.4
+          3.2,
+          50.7,
+          3.3,
+          50.8
         ]
       ]
     },
     "temporal": {
       "interval": [
         [
-          "2015-06-23T00:00:00Z",
-          null
+          "2024-01-01T00:00:00Z",
+          "2024-12-31T23:59:59Z"
         ]
       ]
     }
   },
-  "template:new_field": "test",
-  "template:xyz": {
-    "x": 1,
-    "y": 2,
-    "z": 3
-  },
-  "template:another_one": [
-    1,
-    2,
-    3
-  ],
-  "assets": {
-    "example": {
-      "href": "https://example.com/examples/file.xyz",
-      "template:new_field": "test"
+  "links": [
+    {
+      "href": "https://example.com/collections/netherlands-3d-cities",
+      "rel": "self"
     }
+  ],
+  "summaries": {
+    "datetime": {
+      "minimum": "2024-01-01T00:00:00Z",
+      "maximum": "2024-12-31T23:59:59Z"
+    },
+    "city3d:version": [
+      "1.1",
+      "2.0"
+    ],
+    "city3d:city_objects": {
+      "min": 1000,
+      "max": 50000,
+      "total": 125000
+    },
+    "city3d:lods": [
+      0,
+      1,
+      1.2,
+      2,
+      2.2
+    ],
+    "city3d:co_types": [
+      "Building",
+      "Bridge",
+      "Road",
+      "Tunnel"
+    ],
+    "city3d:semantic_surfaces": [
+      true
+    ],
+    "city3d:textures": [
+      true,
+      false
+    ],
+    "city3d:materials": [
+      true
+    ],
+    "proj:code": [
+      "EPSG:7415",
+      "EPSG:28992",
+      "EPSG:25832"
+    ]
   },
   "item_assets": {
     "data": {
       "roles": [
         "data"
-      ],
-      "template:new_field": "test"
+      ]
     }
-  },
-  "summaries": {
-    "datetime": {
-      "minimum": "2015-06-23T00:00:00Z",
-      "maximum": "2019-07-10T13:44:56Z"
-    }
-  },
-  "links": [
-    {
-      "href": "https://example.com/examples/collection.json",
-      "rel": "self"
-    },
-    {
-      "href": "https://example.com/examples/item.json",
-      "rel": "item"
-    }
-  ]
+  }
 }

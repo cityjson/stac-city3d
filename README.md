@@ -5,7 +5,7 @@
 - **Field Name Prefix:** city3d
 - **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
-- **Owner**: @tudelft-3d
+- **Owner**: @cityjson
 
 This document explains the 3D City Models Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
 
@@ -17,21 +17,20 @@ This extension provides STAC metadata fields specific to 3D city model datasets,
 - [JSON Schema](json-schema/schema.json)
 - [Changelog](./CHANGELOG.md)
 
-## Required Extensions
+## Related Extensions
 
-The 3D City Models Extension is designed to work alongside the following STAC extensions. These extensions are referenced in the JSON schema using `$ref` to allow their fields to be used alongside `city3d:` fields:
+The 3D City Models Extension is designed to work alongside the following STAC extensions. While this extension does not enforce their use in the schema, they are highly recommended for providing complete metadata:
 
 ### Projection Extension
 
 The [Projection Extension](https://github.com/stac-extensions/projection) **SHOULD** be used to specify the coordinate reference system (CRS) of 3D city model datasets.
 
-3D city models commonly use coordinate systems other than WGS84. Use the `proj:epsg`, `proj:wkt2`, or `proj:projjson` fields to specify the CRS:
+3D city models commonly use coordinate systems other than WGS84. Use the `proj:code`, `proj:wkt2`, or `proj:projjson` fields to specify the CRS:
 
 ```json
 {
   "properties": {
-    "proj:epsg": 7415,
-    "city3d:encoding": "CityJSON"
+    "proj:code": "EPSG:7415"
   }
 }
 ```
@@ -46,14 +45,16 @@ The [File Extension](https://github.com/stac-extensions/file) **SHOULD** be used
 
 ### Statistics Extension
 
-The [Statistics Extension](https://github.com/stac-extensions/stats) **MAY** be used to provide detailed statistical information about the 3D city model dataset:
+The [Statistics Extension](https://github.com/stac-extensions/stats) **MAY** be used in Collections to provide detailed statistical information about the properties of the 3D city model dataset:
 
 ```json
 {
-  "stats:bytes": {
-    "minimum": 1024,
-    "maximum": 1048576,
-    "mean": 524288
+  "summaries": {
+    "file:size": {
+      "minimum": 1024,
+      "maximum": 1048576,
+      "mean": 524288
+    }
   }
 }
 ```
@@ -72,47 +73,20 @@ The fields in the table below can be used in these parts of STAC documents:
 - [x] Assets (for both Collections and Items, incl. Item Asset Definitions in Collections)
 - [ ] Links
 
-| Field Name               | Type                                                           | Description                                                          |
-| ------------------------ | -------------------------------------------------------------- | -------------------------------------------------------------------- |
-| city3d:encoding          | string or [string]                                             | **REQUIRED**. The 3D city model encoding format.                     |
-| city3d:version           | string                                                         | Specification version (e.g., "2.1" for CityJSON, "3.0" for CityGML). |
-| city3d:encoding_version  | string                                                         | Version of the specific encoding format.                             |
-| city3d:city_objects      | integer or [City Objects Statistics](#city-objects-statistics) | Number of city objects in the dataset.                               |
-| city3d:lods              | [string]                                                       | Available Levels of Detail (LoD) in the dataset.                     |
-| city3d:co_types          | [string]                                                       | City object types present in the dataset.                            |
-| city3d:attributes        | [[Attribute Definition](#attribute-definition)]                | Schema definitions for semantic attributes on city objects.          |
-| city3d:semantic_surfaces | boolean                                                        | Indicates whether the dataset contains semantic surfaces.            |
-| city3d:textures          | boolean                                                        | Indicates whether the dataset includes texture information.          |
-| city3d:materials         | boolean                                                        | Indicates whether the dataset includes material information.         |
+| Field Name | Type | Description |
+| ---------- | ---- | ----------- |
+
+| city3d:version | string | Specification version (e.g., "2.1" for CityJSON, "3.0" for CityGML). |
+| city3d:encoding_version | string | Version of the specific encoding format. |
+| city3d:city_objects | integer or [City Objects Statistics](#city-objects-statistics) | Number of city objects in the dataset. |
+| city3d:lods | [number] | Available Levels of Detail (LoD) in the dataset. |
+| city3d:co_types | [string] | City object types present in the dataset. |
+| city3d:attributes | [[Attribute Definition](#attribute-definition)] | Schema definitions for semantic attributes on city objects. |
+| city3d:semantic_surfaces | boolean | Indicates whether the dataset contains semantic surfaces. |
+| city3d:textures | boolean | Indicates whether the dataset includes texture information. |
+| city3d:materials | boolean | Indicates whether the dataset includes material information. |
 
 ## Field Definitions
-
-### city3d:encoding
-
-The 3D city model encoding format used for the dataset. This field is **REQUIRED** when using this extension.
-
-**Common values:**
-
-**JSON-based formats:**
-
-- `CityJSON` - Standard CityJSON format (single file, `.json` or `.city.json`)
-- `CityJSONSeq` - CityJSON Text Sequence format (newline-delimited, `.jsonl`)
-- `FlatCityBuf` - FlatBuffers-based binary format (`.fcb`)
-- `CityParquet` - Apache Parquet format (`.parquet`)
-- `CityGML` - Open Geospatial Consortium CityGML format
-
-**Web/3D formats:**
-
-- `3Tiles` - Mapbox 3D Tiles format
-- `I3S` - Esri Indexed 3D Scene Layer format
-- `GLTF` / `GLB` - GL Transmission Format
-
-**Other formats:**
-
-- `KML/COLLADA` - KML with COLLADA 3D models
-- `OBJ` - Wavefront OBJ 3D format
-
-Can be a single string or an array of strings for multi-format datasets.
 
 ### city3d:version
 
@@ -148,10 +122,10 @@ For **Collections** (in `summaries`), this can be an object with statistical agg
 
 ### city3d:lods
 
-Available Levels of Detail (LoD) in the dataset. LoD values are strings to support:
+Available Levels of Detail (LoD) in the dataset. LoD values are numbers to support:
 
-- Integer LoDs: `"0"`, `"1"`, `"2"`, `"3"`, etc.
-- Decimal LoDs (per Biljecki et al. improved specification): `"1.2"`, `"1.5"`, `"2.3"`, etc.
+- Integer LoDs: `0`, `1`, `2`, `3`, etc.
+- Decimal LoDs (per Biljecki et al. improved specification): `1.2`, `1.5`, `2.3`, etc.
 
 ### city3d:co_types
 
@@ -229,11 +203,10 @@ The following types should be used as applicable `rel` types in the [Link Object
   "bbox": [4.357, 52.011, 4.359, 52.012],
   "properties": {
     "datetime": "2024-01-01T00:00:00Z",
-    "proj:epsg": 7415,
-    "city3d:encoding": "CityJSON",
+    "proj:code": "EPSG:7415",
     "city3d:version": "1.1",
     "city3d:city_objects": 15000,
-    "city3d:lods": ["1.2", "1.3", "2.2"],
+    "city3d:lods": [1.2, 1.3, 2.2],
     "city3d:co_types": ["Building", "Bridge", "Road"],
     "city3d:semantic_surfaces": true,
     "city3d:textures": false,
@@ -285,11 +258,10 @@ The following types should be used as applicable `rel` types in the [Link Object
   "bbox": [9.93, 53.55, 9.95, 53.56],
   "properties": {
     "datetime": "2024-01-01T00:00:00Z",
-    "proj:epsg": 25832,
-    "city3d:encoding": "CityGML",
+    "proj:code": "EPSG:25832",
     "city3d:version": "2.0",
     "city3d:city_objects": 42800,
-    "city3d:lods": ["0", "1", "2"],
+    "city3d:lods": [0, 1, 2],
     "city3d:co_types": ["Building", "BuildingPart", "Road", "WaterBody"],
     "city3d:semantic_surfaces": true,
     "city3d:textures": true,
@@ -334,19 +306,18 @@ The following types should be used as applicable `rel` types in the [Link Object
     }
   ],
   "summaries": {
-    "city3d:encoding": ["CityJSON", "CityJSONSeq", "CityGML"],
     "city3d:version": ["1.1", "2.0"],
     "city3d:city_objects": {
       "min": 1000,
       "max": 50000,
       "total": 125000
     },
-    "city3d:lods": ["0", "1", "1.2", "2", "2.2"],
+    "city3d:lods": [0, 1, 1.2, 2, 2.2],
     "city3d:co_types": ["Building", "Bridge", "Road", "Tunnel"],
     "city3d:semantic_surfaces": [true],
     "city3d:textures": [true, false],
     "city3d:materials": [true],
-    "proj:epsg": [7415, 28992, 25832]
+    "proj:code": ["EPSG:7415", "EPSG:28992", "EPSG:25832"]
   }
 }
 ```

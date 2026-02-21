@@ -15,7 +15,7 @@ plugins:
   - remark-lint-blockquote-indentation
   - remark-lint-no-consecutive-blank-lines
   - - remark-lint-maximum-line-length
-    - 150
+    - false
 # Code
   - remark-lint-fenced-code-flag
   - remark-lint-fenced-code-marker
