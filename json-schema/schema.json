@@ -156,11 +156,6 @@
       "anyOf": [
         {
           "required": [
-            "city3d:encoding"
-          ]
-        },
-        {
-          "required": [
             "city3d:version"
           ]
         },
@@ -198,11 +193,6 @@
           "required": [
             "city3d:materials"
           ]
-        },
-        {
-          "required": [
-            "city3d:encoding_version"
-          ]
         }
       ]
     },
@@ -212,14 +202,8 @@
         {
           "type": "object",
           "properties": {
-            "city3d:encoding": {
-              "$ref": "#/definitions/city3d:encoding"
-            },
             "city3d:version": {
               "$ref": "#/definitions/city3d:version"
-            },
-            "city3d:encoding_version": {
-              "$ref": "#/definitions/city3d:encoding_version"
             },
             "city3d:city_objects": {
               "$ref": "#/definitions/city3d:city_objects"
@@ -246,59 +230,11 @@
         }
       ]
     },
-    "city3d:encoding": {
-      "title": "Encoding Format",
-      "description": "The 3D city model encoding format. Can be a single format or an array of formats for multi-format datasets.",
-      "oneOf": [
-        {
-          "type": "string",
-          "enum": [
-            "CityJSON",
-            "CityJSONSeq",
-            "FlatCityBuf",
-            "CityParquet",
-            "CityGML",
-            "KML/COLLADA",
-            "3Tiles",
-            "I3S",
-            "OBJ",
-            "GLTF",
-            "GLB"
-          ]
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "CityJSON",
-              "CityJSONSeq",
-              "FlatCityBuf",
-              "CityParquet",
-              "CityGML",
-              "KML/COLLADA",
-              "3Tiles",
-              "I3S",
-              "OBJ",
-              "GLTF",
-              "GLB"
-            ]
-          },
-          "minItems": 1,
-          "uniqueItems": true
-        }
-      ]
-    },
     "city3d:version": {
       "title": "Specification Version",
       "description": "The specification version of the 3D city model format (e.g., '1.1', '2.0' for CityJSON; '2.0', '3.0' for CityGML).",
       "type": "string",
       "pattern": "^\\d+\\.\\d+(?:\\.\\d+)?$"
-    },
-    "city3d:encoding_version": {
-      "title": "Encoding Version",
-      "description": "Version of the specific encoding format, when the encoding has its own versioning independent of the base specification. For example, FlatCityBuf may have version '0.2.0' regardless of CityJSON version.",
-      "type": "string"
     },
     "city3d:city_objects": {
       "title": "City Objects Count",

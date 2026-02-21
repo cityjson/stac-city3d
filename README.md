@@ -9,7 +9,7 @@
 
 This document explains the 3D City Models Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
 
-This extension provides STAC metadata fields specific to 3D city model datasets, supporting multiple formats including CityJSON, CityGML, and 3D Tiles. It describes encoding format, city object types, levels of detail (LoD), and appearance information.
+This extension provides STAC metadata fields specific to 3D city model datasets, supporting multiple formats including CityJSON, CityJSONSeq, FlatCityBuf, CityGML, and OBJ. It describes encoding format, city object types, levels of detail (LoD), and appearance information.
 
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
@@ -73,28 +73,22 @@ The fields in the table below can be used in these parts of STAC documents:
 - [x] Assets (for both Collections and Items, incl. Item Asset Definitions in Collections)
 - [ ] Links
 
-| Field Name | Type | Description |
-| ---------- | ---- | ----------- |
-
-| city3d:version | string | Specification version (e.g., "2.1" for CityJSON, "3.0" for CityGML). |
-| city3d:encoding_version | string | Version of the specific encoding format. |
-| city3d:city_objects | integer or [City Objects Statistics](#city-objects-statistics) | Number of city objects in the dataset. |
-| city3d:lods | \[number\] | Available Levels of Detail (LoD) in the dataset. |
-| city3d:co_types | \[string\] | City object types present in the dataset. |
-| city3d:attributes | [[Attribute Definition](#attribute-definition)] | Schema definitions for semantic attributes on city objects. |
-| city3d:semantic_surfaces | boolean | Indicates whether the dataset contains semantic surfaces. |
-| city3d:textures | boolean | Indicates whether the dataset includes texture information. |
-| city3d:materials | boolean | Indicates whether the dataset includes material information. |
+| Field Name               | Type                                                           | Description                                                          |
+| ------------------------ | -------------------------------------------------------------- | -------------------------------------------------------------------- |
+| city3d:version           | string                                                         | Specification version (e.g., "2.1" for CityJSON, "3.0" for CityGML). |
+| city3d:city_objects      | integer or [City Objects Statistics](#city-objects-statistics) | Number of city objects in the dataset.                               |
+| city3d:lods              | \[number\]                                                     | Available Levels of Detail (LoD) in the dataset.                     |
+| city3d:co_types          | \[string\]                                                     | City object types present in the dataset.                            |
+| city3d:attributes        | [[Attribute Definition](#attribute-definition)]                | Schema definitions for semantic attributes on city objects.          |
+| city3d:semantic_surfaces | boolean                                                        | Indicates whether the dataset contains semantic surfaces.            |
+| city3d:textures          | boolean                                                        | Indicates whether the dataset includes texture information.          |
+| city3d:materials         | boolean                                                        | Indicates whether the dataset includes material information.         |
 
 ## Field Definitions
 
 ### city3d:version
 
 The specification version of the 3D city model format. Follows semantic versioning (e.g., `1.0`, `1.1`, `2.0`).
-
-### city3d:encoding_version
-
-Version of the specific encoding format, when the encoding has its own versioning independent of the base specification. For example, FlatCityBuf may have version `0.2.0` regardless of CityJSON version.
 
 ### city3d:city_objects
 
