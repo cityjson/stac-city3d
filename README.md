@@ -1,7 +1,7 @@
 # 3D City Models Extension Specification
 
 - **Title:** 3D City Models
-- **Identifier:** <https://cityjson.github.io/stac-city3d/v0.1.0/schema.json>
+- **Identifier:** <https://cityjson.github.io/stac-city3d/v0.2.0/schema.json>
 - **Field Name Prefix:** city3d
 - **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
@@ -77,7 +77,7 @@ The fields in the table below can be used in these parts of STAC documents:
 | ------------------------ | -------------------------------------------------------------- | -------------------------------------------------------------------- |
 | city3d:version           | string                                                         | Specification version (e.g., "2.1" for CityJSON, "3.0" for CityGML). |
 | city3d:city_objects      | integer or [City Objects Statistics](#city-objects-statistics) | Number of city objects in the dataset.                               |
-| city3d:lods              | \[number\]                                                     | Available Levels of Detail (LoD) in the dataset.                     |
+| city3d:lods              | \[string\]                                                     | Available Levels of Detail (LoD) in the dataset.                     |
 | city3d:co_types          | \[string\]                                                     | City object types present in the dataset.                            |
 | city3d:attributes        | [[Attribute Definition](#attribute-definition)]                | Schema definitions for semantic attributes on city objects.          |
 | city3d:semantic_surfaces | boolean                                                        | Indicates whether the dataset contains semantic surfaces.            |
@@ -116,10 +116,10 @@ For **Collections** (in `summaries`), this can be an object with statistical agg
 
 ### city3d:lods
 
-Available Levels of Detail (LoD) in the dataset. LoD values are numbers to support:
+Available Levels of Detail (LoD) in the dataset. LoD values are strings to avoid floating-point precision issues:
 
-- Integer LoDs: `0`, `1`, `2`, `3`, etc.
-- Decimal LoDs (per Biljecki et al. improved specification): `1.2`, `1.5`, `2.3`, etc.
+- Integer LoDs: `"0"`, `"1"`, `"2"`, `"3"`, etc.
+- Decimal LoDs (per Biljecki et al. improved specification): `"1.2"`, `"1.5"`, `"2.3"`, etc.
 
 ### city3d:co_types
 
@@ -179,7 +179,7 @@ The following types should be used as applicable `rel` types in the [Link Object
   "stac_version": "1.1.0",
   "stac_extensions": [
     "https://stac-extensions.github.io/projection/v2.1.0/schema.json",
-    "https://cityjson.github.io/stac-city3d/v0.1.0/schema.json"
+    "https://cityjson.github.io/stac-city3d/v0.2.0/schema.json"
   ],
   "id": "delft-3d-city-model",
   "geometry": {
@@ -200,7 +200,7 @@ The following types should be used as applicable `rel` types in the [Link Object
     "proj:code": "EPSG:7415",
     "city3d:version": "1.1",
     "city3d:city_objects": 15000,
-    "city3d:lods": [1.2, 1.3, 2.2],
+    "city3d:lods": ["1.2", "1.3", "2.2"],
     "city3d:co_types": ["Building", "Bridge", "Road"],
     "city3d:semantic_surfaces": true,
     "city3d:textures": false,
@@ -234,7 +234,7 @@ The following types should be used as applicable `rel` types in the [Link Object
   "stac_version": "1.1.0",
   "stac_extensions": [
     "https://stac-extensions.github.io/projection/v2.1.0/schema.json",
-    "https://cityjson.github.io/stac-city3d/v0.1.0/schema.json"
+    "https://cityjson.github.io/stac-city3d/v0.2.0/schema.json"
   ],
   "id": "hamburg-citygml-lod2",
   "geometry": {
@@ -255,7 +255,7 @@ The following types should be used as applicable `rel` types in the [Link Object
     "proj:code": "EPSG:25832",
     "city3d:version": "2.0",
     "city3d:city_objects": 42800,
-    "city3d:lods": [0, 1, 2],
+    "city3d:lods": ["0", "1", "2"],
     "city3d:co_types": ["Building", "BuildingPart", "Road", "WaterBody"],
     "city3d:semantic_surfaces": true,
     "city3d:textures": true,
@@ -279,7 +279,7 @@ The following types should be used as applicable `rel` types in the [Link Object
   "stac_version": "1.1.0",
   "stac_extensions": [
     "https://stac-extensions.github.io/projection/v2.1.0/schema.json",
-    "https://cityjson.github.io/stac-city3d/v0.1.0/schema.json"
+    "https://cityjson.github.io/stac-city3d/v0.2.0/schema.json"
   ],
   "id": "netherlands-3d-cities",
   "title": "Netherlands 3D City Models",
@@ -306,7 +306,7 @@ The following types should be used as applicable `rel` types in the [Link Object
       "max": 50000,
       "total": 125000
     },
-    "city3d:lods": [0, 1, 1.2, 2, 2.2],
+    "city3d:lods": ["0", "1", "1.2", "2", "2.2"],
     "city3d:co_types": ["Building", "Bridge", "Road", "Tunnel"],
     "city3d:semantic_surfaces": [true],
     "city3d:textures": [true, false],
