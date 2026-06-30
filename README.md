@@ -39,9 +39,8 @@ The [Projection Extension](https://github.com/stac-extensions/projection) **SHOU
 
 The [File Extension](https://github.com/stac-extensions/file) **SHOULD** be used to provide additional file-specific metadata for 3D city model assets:
 
-- `file:checksum` - MD5, SHA-256, or other checksum of the file
+- `file:checksum` - A [Multihash](https://github.com/multiformats/multihash) of the file (e.g. SHA-256)
 - `file:size` - File size in bytes
-- `file:values` - Statistics about the file content
 
 ### Statistics Extension
 
