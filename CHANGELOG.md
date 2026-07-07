@@ -22,4 +22,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-[Unreleased]: <https://github.com/stac-extensions/template/compare/v1.0.0...HEAD>
+[Unreleased]: <https://github.com/cityjson/stac-city3d/compare/v0.2.0...HEAD>
+[v0.2.0]: <https://github.com/cityjson/stac-city3d/releases/tag/v0.2.0>
