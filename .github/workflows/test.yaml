@@ -7,7 +7,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: |
           npm install
           npm test
