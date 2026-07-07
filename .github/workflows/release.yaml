@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to release (must match package.json, e.g. 0.2.0)
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Verify package.json version
+        id: pkg
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          INPUT_VERSION="${{ inputs.version }}"
+          if [ "$PACKAGE_VERSION" != "$INPUT_VERSION" ]; then
+            echo "Version mismatch: package.json is $PACKAGE_VERSION but input was $INPUT_VERSION"
+            exit 1
+          fi
+          echo "version=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create and push tag
+        run: |
+          VERSION="${{ steps.pkg.outputs.version }}"
+          git tag -a "v${VERSION}" -m "Release v${VERSION}"
+          git push origin "v${VERSION}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.pkg.outputs.version }}
+          name: Release v${{ steps.pkg.outputs.version }}
+          generate_release_notes: true
